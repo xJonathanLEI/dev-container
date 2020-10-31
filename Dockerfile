@@ -4,7 +4,7 @@ ENV TZ=Etc/GMT
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
-    apt-get install -y sudo nano curl software-properties-common openssh-server && \
+    apt-get install -y sudo nano curl software-properties-common build-essential openssh-server && \
     add-apt-repository -y ppa:git-core/ppa && \
     apt-get update && \
     apt-get install -y git && \
@@ -25,6 +25,9 @@ RUN sed -i 's/required/sufficient/g' /etc/pam.d/chsh && \
     passwd -d dev && \
     sudo -u dev chsh -s /bin/bash && \
     echo 'dev ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/dev
+
+RUN sudo -u dev sh -c 'cd /home/dev && curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs -o rust.sh && sh rust.sh -y && rm rust.sh' && \
+    echo "export PATH=\"$PATH:/home/dev/.cargo/bin\"" >> /home/dev/.bashrc
 
 RUN mkdir /var/run/sshd && \
     sed -i 's/#PermitEmptyPasswords no/PermitEmptyPasswords yes/g' /etc/ssh/sshd_config && \
