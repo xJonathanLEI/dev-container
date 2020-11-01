@@ -4,7 +4,7 @@ ENV TZ=Etc/GMT
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
-    apt-get install -y sudo nano curl software-properties-common build-essential openssh-server && \
+    apt-get install -y sudo nano curl software-properties-common build-essential openssh-server unzip && \
     add-apt-repository -y ppa:git-core/ppa && \
     apt-get update && \
     apt-get install -y git && \
@@ -17,7 +17,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     apt-get install -y dotnet-sdk-3.1 && \
     curl -sL https://deb.nodesource.com/setup_14.x | bash && \
     apt-get install -y nodejs && \
-    npm install -g yarn
+    npm install -g yarn && \
+    curl -L https://dl.google.com/android/repository/platform-tools-latest-linux.zip -o platform-tools.zip && \
+    unzip platform-tools.zip -d /usr/local/ && \
+    rm platform-tools.zip && \
+    ln -s /usr/local/platform-tools/adb /usr/local/bin/adb
 
 RUN sed -i 's/required/sufficient/g' /etc/pam.d/chsh && \
     useradd -m dev && \
