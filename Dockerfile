@@ -6,8 +6,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     apt-get update && \
     apt-get install -y sudo nano curl software-properties-common build-essential openssh-server unzip && \
     add-apt-repository -y ppa:git-core/ppa && \
+    add-apt-repository -y ppa:longsleep/golang-backports && \
     apt-get update && \
-    apt-get install -y git && \
+    apt-get install -y git golang-go && \
     curl https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
