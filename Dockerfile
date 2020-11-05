@@ -4,21 +4,22 @@ ENV TZ=Etc/GMT
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
-    apt-get install -y sudo nano curl software-properties-common build-essential openssh-server unzip && \
+    apt-get install -y sudo nano curl software-properties-common build-essential openssh-server unzip apt-transport-https ca-certificates && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     add-apt-repository -y ppa:git-core/ppa && \
     add-apt-repository -y ppa:longsleep/golang-backports && \
+    add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" && \
     apt-get update && \
     apt-get install -y git golang-go && \
     curl https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
     apt-get update && \
-    apt-get install -y apt-transport-https && \
-    apt-get update && \
     apt-get install -y dotnet-sdk-3.1 && \
     curl -sL https://deb.nodesource.com/setup_14.x | bash && \
     apt-get install -y nodejs && \
     npm install -g yarn && \
+    apt-get install -y docker-ce-cli && \
     curl -L https://dl.google.com/android/repository/platform-tools-latest-linux.zip -o platform-tools.zip && \
     unzip platform-tools.zip -d /usr/local/ && \
     rm platform-tools.zip && \
