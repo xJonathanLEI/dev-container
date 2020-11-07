@@ -8,9 +8,27 @@ It's highly opinionated as it's meant for my own use.
 
 The container is configurable through environment variables.
 
-### PORT
+If you don't supply OpenSSH host keys they'll simply be randomly generated. However, it's highly recommended that you set them, or you'll get a key conflict every time you re-create the container.
+
+### SSH_PORT
 
 The port the OpenSSH server listens on. Defaults to `22`.
+
+### SSH_HOST_DSA_KEY
+
+The base64-encoded DSA host private key used by the OpenSSH server.
+
+### SSH_HOST_ECDSA_KEY
+
+The base64-encoded ECDSA host private key used by the OpenSSH server.
+
+### SSH_HOST_ED25519_KEY
+
+The base64-encoded ED25519 host private key used by the OpenSSH server.
+
+### SSH_HOST_RSA_KEY
+
+The base64-encoded RSA host private key used by the OpenSSH server.
 
 ### ADB_KEY
 

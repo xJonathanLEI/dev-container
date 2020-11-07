@@ -23,7 +23,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     curl -L https://dl.google.com/android/repository/platform-tools-latest-linux.zip -o platform-tools.zip && \
     unzip platform-tools.zip -d /usr/local/ && \
     rm platform-tools.zip && \
-    ln -s /usr/local/platform-tools/adb /usr/local/bin/adb
+    ln -s /usr/local/platform-tools/adb /usr/local/bin/adb && \
+    rm /etc/ssh/ssh_host_*
 
 RUN sed -i 's/required/sufficient/g' /etc/pam.d/chsh && \
     useradd -m dev && \
