@@ -4,7 +4,7 @@ ENV TZ=Etc/GMT
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
-    apt-get install -y sudo nano curl software-properties-common build-essential openssh-server unzip apt-transport-https ca-certificates && \
+    apt-get install -y sudo nano curl software-properties-common build-essential openssh-server unzip apt-transport-https ca-certificates ufw && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     add-apt-repository -y ppa:git-core/ppa && \
     add-apt-repository -y ppa:longsleep/golang-backports && \
