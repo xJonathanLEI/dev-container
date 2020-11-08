@@ -20,6 +20,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     apt-get install -y nodejs && \
     npm install -g yarn && \
     apt-get install -y docker-ce-cli && \
+    apt-get install -y openjdk-8-jdk && \
     curl -L https://dl.google.com/android/repository/platform-tools-latest-linux.zip -o platform-tools.zip && \
     unzip platform-tools.zip -d /usr/local/ && \
     rm platform-tools.zip && \
