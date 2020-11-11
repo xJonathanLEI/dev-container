@@ -15,7 +15,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
     apt-get update && \
-    apt-get install -y dotnet-sdk-3.1 && \
+    apt-get install -y dotnet-sdk-5.0 aspnetcore-runtime-3.1 && \
     curl -sL https://deb.nodesource.com/setup_14.x | bash && \
     apt-get install -y nodejs && \
     npm install -g yarn && \
