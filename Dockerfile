@@ -6,9 +6,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     apt-get update && \
     apt-get install -y sudo nano curl software-properties-common build-essential openssh-server unzip apt-transport-https ca-certificates ufw clang zlib1g-dev libkrb5-dev libtinfo5 && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
+    curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
     add-apt-repository -y ppa:git-core/ppa && \
     add-apt-repository -y ppa:longsleep/golang-backports && \
-    add-apt-repository -y "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable" && \
+    add-apt-repository -y "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
+    sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
     apt-get update && \
     apt-get install -y git golang-go && \
     curl https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb && \
@@ -20,6 +22,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     apt-get install -y nodejs && \
     npm install -g yarn && \
     apt-get install -y docker-ce-cli && \
+    apt-get install -y terraform && \
     apt-get install -y openjdk-8-jdk && \
     curl -L https://dl.google.com/android/repository/platform-tools-latest-linux.zip -o platform-tools.zip && \
     unzip platform-tools.zip -d /usr/local/ && \
