@@ -1,6 +1,7 @@
 #!/bin/sh
 
 OPTION_SSH_PORT=22
+OPTION_SSH_KEY=
 OPTION_SSH_HOST_DSA_KEY=
 OPTION_SSH_HOST_ECDSA_KEY=
 OPTION_SSH_HOST_ED25519_KEY=
@@ -9,6 +10,10 @@ OPTION_ADB_KEY=
 
 if [ -n "${SSH_PORT}" ]; then
     OPTION_SSH_PORT=${SSH_PORT}
+fi
+
+if [ -n "${SSH_KEY}" ]; then
+    OPTION_SSH_KEY=${SSH_KEY}
 fi
 
 if [ -n "${SSH_HOST_DSA_KEY}" ]; then
@@ -32,6 +37,12 @@ if [ -n "${ADB_KEY}" ]; then
 fi
 
 sudo sed -i "s/#Port 22/Port ${OPTION_SSH_PORT}/g" /etc/ssh/sshd_config
+
+if [ -n "${OPTION_SSH_KEY}" ]; then
+    mkdir ~/.ssh
+    echo "${OPTION_SSH_KEY}" > ~/.ssh/authorized_keys
+    sudo sed -i "s/#PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
+fi
 
 if [ -n "${OPTION_SSH_HOST_DSA_KEY}" ]; then
     sudo sh -c "echo \"${OPTION_SSH_HOST_DSA_KEY}\" | base64 -d > /etc/ssh/ssh_host_dsa_key"
