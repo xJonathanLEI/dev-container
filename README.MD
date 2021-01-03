@@ -10,15 +10,15 @@ The container is configurable through environment variables.
 
 If you don't supply OpenSSH host keys they'll simply be randomly generated. However, it's highly recommended that you set them, or you'll get a key conflict every time you re-create the container.
 
-For convenience, by default the container can be logged in with an empty password as user `dev`. It's recommended that you disable password login by setting `SSH_KEY`.
+For convenience, by default the container can be logged in with an empty password as user `dev`. It's recommended that you disable password login by setting `SSH_KEYS`.
 
 ### SSH_PORT
 
 The port the OpenSSH server listens on. Defaults to `22`.
 
-### SSH_KEY
+### SSH_KEYS
 
-The public key for SSH login. Password login (with empty password) if disabled if and only if `SSH_KEY` is supplied.
+Public keys for SSH login. Multiple keys are separated by comma `,`. Password login (with empty password) if disabled if and only if `SSH_KEYS` is supplied.
 
 ### SSH_HOST_DSA_KEY
 
