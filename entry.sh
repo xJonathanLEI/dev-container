@@ -78,4 +78,6 @@ if [ -n "${OPTION_ADB_KEY}" ]; then
     mkdir -p ~/.android && echo ${OPTION_ADB_KEY} | base64 -d > ~/.android/adbkey
 fi
 
+sudo dockerd &
+
 exec sudo /usr/sbin/sshd -D
