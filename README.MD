@@ -43,3 +43,7 @@ The base64-encoded private key used for ADB. A random key will be generated the 
 To encode your existing key (which most likely lives at `${HOME}/.android/adbkey`):
 
     $ cat /path/to/adb/key | base64 -w 0
+
+### STARTUP_COMMAND
+
+An optional command to run during container startup.

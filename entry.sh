@@ -7,6 +7,7 @@ OPTION_SSH_HOST_ECDSA_KEY=
 OPTION_SSH_HOST_ED25519_KEY=
 OPTION_SSH_HOST_RSA_KEY=
 OPTION_ADB_KEY=
+OPTION_STARTUP_COMMAND=
 
 if [ -n "${SSH_PORT}" ]; then
     OPTION_SSH_PORT=${SSH_PORT}
@@ -34,6 +35,10 @@ fi
 
 if [ -n "${ADB_KEY}" ]; then
     OPTION_ADB_KEY=${ADB_KEY}
+fi
+
+if [ -n "${STARTUP_COMMAND}" ]; then
+    OPTION_STARTUP_COMMAND=${STARTUP_COMMAND}
 fi
 
 sudo sed -i "s/#Port 22/Port ${OPTION_SSH_PORT}/g" /etc/ssh/sshd_config
@@ -76,6 +81,10 @@ sudo ssh-keygen -A
 
 if [ -n "${OPTION_ADB_KEY}" ]; then
     mkdir -p ~/.android && echo ${OPTION_ADB_KEY} | base64 -d > ~/.android/adbkey
+fi
+
+if [ -n "${OPTION_STARTUP_COMMAND}" ]; then
+    ${OPTION_STARTUP_COMMAND}
 fi
 
 sudo dockerd &
