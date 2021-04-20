@@ -44,6 +44,14 @@ To encode your existing key (which most likely lives at `${HOME}/.android/adbkey
 
     $ cat /path/to/adb/key | base64 -w 0
 
+### CODE_SERVER_PORT
+
+The port `code-server` listens on. Defaults to `8040`.
+
+### CODE_SERVER_PASSWORD
+
+Password for `code-server`. `code-server` won't run if this option is left empty.
+
 ### STARTUP_COMMAND
 
 An optional command to run during container startup.

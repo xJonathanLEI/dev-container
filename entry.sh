@@ -7,6 +7,8 @@ OPTION_SSH_HOST_ECDSA_KEY=
 OPTION_SSH_HOST_ED25519_KEY=
 OPTION_SSH_HOST_RSA_KEY=
 OPTION_ADB_KEY=
+OPTION_CODE_SERVER_PORT=8040
+OPTION_CODE_SERVER_PASSWORD=
 OPTION_STARTUP_COMMAND=
 
 if [ -n "${SSH_PORT}" ]; then
@@ -35,6 +37,14 @@ fi
 
 if [ -n "${ADB_KEY}" ]; then
     OPTION_ADB_KEY=${ADB_KEY}
+fi
+
+if [ -n "${CODE_SERVER_PORT}" ]; then
+    OPTION_CODE_SERVER_PORT=${CODE_SERVER_PORT}
+fi
+
+if [ -n "${CODE_SERVER_PASSWORD}" ]; then
+    OPTION_CODE_SERVER_PASSWORD=${CODE_SERVER_PASSWORD}
 fi
 
 if [ -n "${STARTUP_COMMAND}" ]; then
@@ -88,5 +98,12 @@ if [ -n "${OPTION_STARTUP_COMMAND}" ]; then
 fi
 
 sudo dockerd &
+
+if [ -n "${OPTION_CODE_SERVER_PASSWORD}" ]; then
+    PASSWORD="${OPTION_CODE_SERVER_PASSWORD}" code-server \
+        --bind-addr 0.0.0.0:${CODE_SERVER_PORT} \
+        --user-data-dir ${HOME}/.code-server/data \
+        --extensions-dir ${HOME}/.code-server/extensions &
+fi
 
 exec sudo /usr/sbin/sshd -D

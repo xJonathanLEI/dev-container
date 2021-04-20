@@ -29,7 +29,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     ln -s /usr/local/platform-tools/adb /usr/local/bin/adb && \
     rm /etc/ssh/ssh_host_* && \
     curl -L "https://github.com/docker/compose/releases/download/1.28.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
-    chmod +x /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose && \
+    curl -fsSL https://code-server.dev/install.sh | sh
 
 RUN sed -i 's/required/sufficient/g' /etc/pam.d/chsh && \
     useradd -m dev && \
