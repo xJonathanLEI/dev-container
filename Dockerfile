@@ -50,7 +50,8 @@ RUN mkdir /var/run/sshd && \
 
 USER dev
 
-RUN echo "export PATH=\"\$PATH:$(yarn global bin)\"" >> /home/dev/.bashrc
+RUN echo "export PATH=\"\$PATH:$(yarn global bin)\"" >> /home/dev/.bashrc && \
+    echo 'export GPG_TTY=$(tty)' >> /home/dev/.bashrc
 
 COPY ./entry.sh /usr/local/bin/entry
 
