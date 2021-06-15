@@ -48,9 +48,15 @@ To encode your existing key (which most likely lives at `${HOME}/.android/adbkey
 
 The port `code-server` listens on. Defaults to `8040`.
 
-### CODE_SERVER_PASSWORD
+### CODE_SERVER_PASSWORD_HASH
 
-Password for `code-server`. `code-server` won't run if this option is left empty.
+SHA256-hashed password for `code-server`. `code-server` won't run if this option is left empty.
+
+Hashed passwords can be generated with:
+
+```sh
+$ echo -n "YOUR_PASSWORD" | sha256sum
+```
 
 ### STARTUP_COMMAND
 
