@@ -1,3 +1,12 @@
+FROM rust:buster AS file-locker
+
+WORKDIR /src
+
+RUN git clone --depth 1 -b v0.1.0 https://github.com/xJonathanLEI/file-locker
+
+RUN cd file-locker && \
+    cargo build --release
+
 FROM ubuntu:20.04
 
 ENV TZ=Etc/GMT
@@ -31,6 +40,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     curl -L "https://github.com/docker/compose/releases/download/1.28.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose && \
     curl -fsSL https://code-server.dev/install.sh | sh
+
+COPY --from=file-locker /src/file-locker/target/release/file-locker /usr/local/bin/file-locker
 
 RUN sed -i 's/required/sufficient/g' /etc/pam.d/chsh && \
     useradd -m dev && \
