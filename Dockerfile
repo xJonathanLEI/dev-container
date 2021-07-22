@@ -2,7 +2,7 @@ FROM rust:buster AS file-locker
 
 WORKDIR /src
 
-RUN git clone --depth 1 -b v0.1.0 https://github.com/xJonathanLEI/file-locker
+RUN git clone --depth 1 -b v0.1.1 https://github.com/xJonathanLEI/file-locker
 
 RUN cd file-locker && \
     cargo build --release
