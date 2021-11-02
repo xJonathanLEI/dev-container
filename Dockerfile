@@ -41,6 +41,13 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     chmod +x /usr/local/bin/docker-compose && \
     curl -fsSL https://code-server.dev/install.sh | sh
 
+RUN mkdir /usr/lib/android-sdk/ && \
+    cd /usr/lib/android-sdk/ && \
+    curl -L https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -o /tmp/commandlinetools.zip && \
+    unzip /tmp/commandlinetools.zip && \
+    rm /tmp/commandlinetools.zip && \
+    yes | sudo /usr/lib/android-sdk/cmdline-tools/bin/sdkmanager --sdk_root=/usr/lib/android-sdk --install "build-tools;31.0.0"
+
 COPY --from=file-locker /src/file-locker/target/release/file-locker /usr/local/bin/file-locker
 
 RUN sed -i 's/required/sufficient/g' /etc/pam.d/chsh && \
