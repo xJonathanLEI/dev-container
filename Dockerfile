@@ -18,10 +18,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
     add-apt-repository -y ppa:git-core/ppa && \
     add-apt-repository -y ppa:longsleep/golang-backports && \
+    add-apt-repository -y ppa:jonathonf/vim && \
     add-apt-repository -y "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
     sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
     apt-get update && \
-    apt-get install -y git golang-go && \
+    apt-get install -y git golang-go vim && \
     curl https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
     rm packages-microsoft-prod.deb && \
