@@ -13,7 +13,7 @@ ENV TZ=Etc/GMT
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
-    apt-get install -y sudo nano vim curl software-properties-common build-essential openssh-server libssl-dev libudev-dev unzip apt-transport-https ca-certificates ufw clang zlib1g-dev libkrb5-dev libtinfo5 bash-completion jq autossh screen uuid-runtime dnsutils python3 python3-pip python3-dev libgmp3-dev && \
+    apt-get install -y sudo nano vim neovim tmux curl software-properties-common build-essential openssh-server libssl-dev libudev-dev unzip apt-transport-https ca-certificates ufw clang zlib1g-dev libkrb5-dev libtinfo5 bash-completion jq autossh screen uuid-runtime dnsutils python3 python3-pip python3-dev libgmp3-dev && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
     add-apt-repository -y ppa:git-core/ppa && \
