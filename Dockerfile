@@ -13,7 +13,7 @@ ENV TZ=Etc/GMT
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
-    apt-get install -y sudo nano vim neovim tmux curl software-properties-common build-essential openssh-server libssl-dev libudev-dev unzip apt-transport-https ca-certificates ufw clang zlib1g-dev libkrb5-dev libtinfo5 bash-completion jq autossh screen uuid-runtime dnsutils python3 python3-pip python3-dev libgmp3-dev && \
+    apt-get install -y sudo nano vim tmux curl software-properties-common build-essential openssh-server libssl-dev libudev-dev unzip apt-transport-https ca-certificates ufw clang zlib1g-dev libkrb5-dev libtinfo5 bash-completion jq autossh screen uuid-runtime dnsutils python3 python3-pip python3-dev libgmp3-dev && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
     add-apt-repository -y ppa:git-core/ppa && \
@@ -42,7 +42,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     chmod +x /usr/local/bin/docker-compose && \
     curl -fsSL https://code-server.dev/install.sh | sh && \
     pip3 install ecdsa fastecdsa sympy && \
-    pip3 install cairo-lang
+    pip3 install cairo-lang && \
+    curl -o /tmp/nvim.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.6.1/nvim-linux64.tar.gz && \
+    tar zxvf /tmp/nvim.tar.gz --directory /usr --strip-components=1 && \
+    rm /tmp/nvim.tar.gz
 
 RUN mkdir /usr/lib/android-sdk/ && \
     cd /usr/lib/android-sdk/ && \
