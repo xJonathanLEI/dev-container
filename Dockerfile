@@ -43,7 +43,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     curl -fsSL https://code-server.dev/install.sh | sh && \
     pip3 install ecdsa fastecdsa sympy && \
     pip3 install cairo-lang && \
-    curl -o /tmp/nvim.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.6.1/nvim-linux64.tar.gz && \
+    curl -o /tmp/nvim.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.tar.gz && \
     tar zxvf /tmp/nvim.tar.gz --directory /usr --strip-components=1 && \
     rm /tmp/nvim.tar.gz
 
