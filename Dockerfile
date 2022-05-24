@@ -45,7 +45,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     pip3 install cairo-lang && \
     curl -o /tmp/nvim.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.tar.gz && \
     tar zxvf /tmp/nvim.tar.gz --directory /usr --strip-components=1 && \
-    rm /tmp/nvim.tar.gz
+    rm /tmp/nvim.tar.gz && \
+    apt-get install x11-xkb-utils && \
+    curl -o /tmp/tigervnc.tar.gz -L https://sourceforge.net/projects/tigervnc/files/stable/1.12.0/tigervnc-1.12.0.x86_64.tar.gz/download && \
+    tar zxvf /tmp/tigervnc.tar.gz --directory / --strip-components=1 && \
+    rm /tmp/tigervnc.tar.gz
 
 RUN mkdir /usr/lib/android-sdk/ && \
     cd /usr/lib/android-sdk/ && \
