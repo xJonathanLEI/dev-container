@@ -23,11 +23,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
     apt-get update && \
     apt-get install -y git golang-go vim && \
-    curl https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -o packages-microsoft-prod.deb && \
-    dpkg -i packages-microsoft-prod.deb && \
-    rm packages-microsoft-prod.deb && \
-    apt-get update && \
-    apt-get install -y dotnet-sdk-5.0 aspnetcore-runtime-3.1 && \
     curl -sL https://deb.nodesource.com/setup_14.x | bash && \
     apt-get install -y nodejs && \
     npm install -g yarn && \
