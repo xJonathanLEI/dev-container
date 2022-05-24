@@ -9,7 +9,7 @@ RUN cd file-locker && \
 
 FROM ubuntu:20.04
 
-ENV TZ=Etc/GMT
+ARG TZ="Etc/GMT"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
@@ -79,7 +79,8 @@ RUN mkdir /var/run/sshd && \
 USER dev
 
 RUN echo "export PATH=\"\$PATH:$(yarn global bin)\"" >> /home/dev/.bashrc && \
-    echo 'export GPG_TTY=$(tty)' >> /home/dev/.bashrc
+    echo 'export GPG_TTY=$(tty)' >> /home/dev/.bashrc && \
+    echo "alias git=\"TZ=Etc/GMT git\"" >> /home/dev/.bashrc
 
 COPY ./entry.sh /usr/local/bin/entry
 
