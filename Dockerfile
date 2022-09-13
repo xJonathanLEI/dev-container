@@ -13,16 +13,20 @@ ARG TZ="Etc/GMT"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
-    apt-get install -y sudo nano vim tmux curl software-properties-common build-essential openssh-server libssl-dev libudev-dev unzip apt-transport-https ca-certificates ufw clang zlib1g-dev libkrb5-dev libtinfo5 bash-completion jq autossh screen uuid-runtime dnsutils python3 python3-pip python3-dev libgmp3-dev && \
+    apt-get install -y sudo nano vim tmux curl software-properties-common build-essential openssh-server libssl-dev libudev-dev unzip apt-transport-https ca-certificates ufw clang zlib1g-dev libkrb5-dev libtinfo5 bash-completion jq autossh screen uuid-runtime dnsutils libgmp3-dev && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
     add-apt-repository -y ppa:git-core/ppa && \
     add-apt-repository -y ppa:longsleep/golang-backports && \
     add-apt-repository -y ppa:jonathonf/vim && \
+    add-apt-repository -y ppa:deadsnakes/ppa && \
     add-apt-repository -y "deb [arch=$(dpkg --print-architecture)] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" && \
     sudo apt-add-repository "deb [arch=$(dpkg --print-architecture)] https://apt.releases.hashicorp.com $(lsb_release -cs) main" && \
     apt-get update && \
-    apt-get install -y git golang-go vim && \
+    apt-get install -y git golang-go vim python3.9 python3.9-distutils python3.9-dev && \
+    curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && \
+    python3.9 /tmp/get-pip.py && \
+    rm /tmp/get-pip.py && \
     curl -sL https://deb.nodesource.com/setup_14.x | bash && \
     apt-get install -y nodejs && \
     npm install -g yarn && \
@@ -36,9 +40,9 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     curl -L "https://github.com/docker/compose/releases/download/1.28.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose && \
     curl -fsSL https://code-server.dev/install.sh | sh && \
-    pip3 install ecdsa fastecdsa sympy && \
-    pip3 install cairo-lang && \
-    pip3 install black && \
+    pip install ecdsa fastecdsa sympy && \
+    pip install cairo-lang && \
+    pip install black && \
     yarn global add prettier && \
     curl -o /tmp/nvim.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.tar.gz && \
     tar zxvf /tmp/nvim.tar.gz --directory /usr --strip-components=1 && \
