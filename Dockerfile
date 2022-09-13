@@ -13,7 +13,7 @@ ARG TZ="Etc/GMT"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     echo $TZ > /etc/timezone && \
     apt-get update && \
-    apt-get install -y sudo nano vim tmux curl software-properties-common build-essential openssh-server libssl-dev libudev-dev unzip apt-transport-https ca-certificates ufw clang zlib1g-dev libkrb5-dev libtinfo5 bash-completion jq autossh screen uuid-runtime dnsutils libgmp3-dev && \
+    apt-get install -y sudo nano vim curl software-properties-common build-essential openssh-server libssl-dev libudev-dev unzip apt-transport-https ca-certificates ufw clang zlib1g-dev libkrb5-dev libtinfo5 bash-completion jq autossh screen uuid-runtime dnsutils libgmp3-dev libevent-dev libncurses-dev && \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
     curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - && \
     add-apt-repository -y ppa:git-core/ppa && \
@@ -47,6 +47,13 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     curl -o /tmp/nvim.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.tar.gz && \
     tar zxvf /tmp/nvim.tar.gz --directory /usr --strip-components=1 && \
     rm /tmp/nvim.tar.gz && \
+    curl -L https://github.com/tmux/tmux/releases/download/3.3a/tmux-3.3a.tar.gz | tar zxv -C/tmp/ && \
+    cd /tmp/tmux-3.3a/ && \
+    ./configure && \
+    make && \
+    make install && \
+    rm -rf /usr/local/src/tmux-* && \
+    mv /tmp/tmux-3.3a /usr/local/src && \
     apt-get install x11-xkb-utils && \
     curl -o /tmp/tigervnc.tar.gz -L https://sourceforge.net/projects/tigervnc/files/stable/1.12.0/tigervnc-1.12.0.x86_64.tar.gz/download && \
     tar zxvf /tmp/tigervnc.tar.gz --directory / --strip-components=1 && \
