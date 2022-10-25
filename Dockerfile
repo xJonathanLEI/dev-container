@@ -78,7 +78,7 @@ RUN sed -i 's/required/sufficient/g' /etc/pam.d/chsh && \
 RUN sudo -u dev sh -c 'cd /home/dev && curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs -o rust.sh && sh rust.sh -y && rm rust.sh' && \
     echo "export PATH=\"\$PATH:/home/dev/.cargo/bin\"" >> /home/dev/.bashrc && \
     sudo -u dev sh -c '/home/dev/.cargo/bin/rustup toolchain install nightly' && \
-    sudo -u dev sh -c '/home/dev/.cargo/bin/cargo install --locked ripgrep'
+    sudo -u dev sh -c '/home/dev/.cargo/bin/cargo install --locked --features pcre2 ripgrep'
 
 RUN mkdir /var/run/sshd && \
     sed -i 's/#PermitEmptyPasswords no/PermitEmptyPasswords yes/g' /etc/ssh/sshd_config && \
