@@ -27,7 +27,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py && \
     python3.9 /tmp/get-pip.py && \
     rm /tmp/get-pip.py && \
-    curl -sL https://deb.nodesource.com/setup_14.x | bash && \
+    curl -sL https://deb.nodesource.com/setup_16.x | bash && \
     apt-get install -y nodejs && \
     npm install -g yarn && \
     apt-get install -y docker-ce docker-ce-cli containerd.io && \
