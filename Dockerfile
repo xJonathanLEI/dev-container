@@ -44,7 +44,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     pip install cairo-lang && \
     pip install black && \
     yarn global add prettier && \
-    curl -o /tmp/nvim.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.tar.gz && \
+    curl -o /tmp/nvim.tar.gz -L https://github.com/neovim/neovim/releases/download/v0.8.1/nvim-linux64.tar.gz && \
     tar zxvf /tmp/nvim.tar.gz --directory /usr --strip-components=1 && \
     rm /tmp/nvim.tar.gz && \
     curl -L https://github.com/tmux/tmux/releases/download/3.3a/tmux-3.3a.tar.gz | tar zxv -C/tmp/ && \
