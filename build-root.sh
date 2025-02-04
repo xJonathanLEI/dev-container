@@ -22,6 +22,5 @@ echo 'dev ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/dev
 
 # Install Rust for `dev` user
 sudo -u dev sh -c 'cd /home/dev && curl --proto "=https" --tlsv1.2 -sSf https://sh.rustup.rs -o rust.sh && sh rust.sh -y && rm rust.sh'
-echo "export PATH=\"\$PATH:/home/dev/.cargo/bin\"" >> /home/dev/.bashrc
 
 mkdir /var/run/sshd
