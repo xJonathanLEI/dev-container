@@ -1,0 +1,96 @@
+name: "Build Docker Image"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  image-info:
+    name: "Extract image info"
+    runs-on: "ubuntu-24.04"
+    outputs:
+      repo: ${{ steps.derive.outputs.repo }}
+
+    steps:
+      - id: "derive"
+        name: "Derive image info"
+        run: |
+          REPO="${{ github.repository }}"
+          echo "repo=ghcr.io/${REPO@L}" >> $GITHUB_OUTPUT
+
+  build:
+    name: "Build for linux/${{ matrix.arch }}"
+    runs-on: "${{ matrix.runner }}"
+    needs:
+      - "image-info"
+
+    strategy:
+      matrix:
+        include:
+          - runner: "ubuntu-24.04"
+            arch: "amd64"
+          - runner: "ubuntu-24.04-arm"
+            arch: "arm64"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Build Docker image"
+        run: |
+          docker build -t ${{ needs.image-info.outputs.repo }}:${{ matrix.arch }} -f ./Dockerfile .
+
+      - name: "Export Docker image"
+        run: |
+          docker save ${{ needs.image-info.outputs.repo }}:${{ matrix.arch }} | gzip > /tmp/${{ matrix.arch }}.tar.gz
+
+      - name: "Upload Docker image artifact"
+        uses: "actions/upload-artifact@v4"
+        with:
+          name: "${{ matrix.arch }}.tar.gz"
+          path: "/tmp/${{ matrix.arch }}.tar.gz"
+
+  push:
+    name: "Push Docker images"
+    runs-on: "ubuntu-24.04"
+    needs:
+      - "image-info"
+      - "build"
+    permissions:
+      contents: "read"
+      packages: "write"
+
+    steps:
+      - name: "Download linux/amd64 image"
+        uses: "actions/download-artifact@v4"
+        with:
+          name: "amd64.tar.gz"
+          path: "/tmp/"
+
+      - name: "Download linux/arm64/v8 image"
+        uses: "actions/download-artifact@v4"
+        with:
+          name: "arm64.tar.gz"
+          path: "/tmp/"
+
+      - name: "Load Docker images"
+        run: |
+          docker load < /tmp/amd64.tar.gz
+          docker load < /tmp/arm64.tar.gz
+
+      - name: "Login to GitHub Packages"
+        uses: "docker/login-action@v1.6.0"
+        with:
+          registry: "ghcr.io"
+          username: "github"
+          password: "${{ secrets.GITHUB_TOKEN }}"
+
+      - name: "Push Docker images"
+        run: |
+          docker push ${{ needs.image-info.outputs.repo }}:amd64
+          docker push ${{ needs.image-info.outputs.repo }}:arm64
+          docker manifest create ${{ needs.image-info.outputs.repo }}:latest \
+            ${{ needs.image-info.outputs.repo }}:amd64 \
+            ${{ needs.image-info.outputs.repo }}:arm64
+          docker manifest push ${{ needs.image-info.outputs.repo }}:latest

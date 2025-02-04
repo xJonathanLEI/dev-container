@@ -36,28 +36,6 @@ The base64-encoded ED25519 host private key used by the OpenSSH server.
 
 The base64-encoded RSA host private key used by the OpenSSH server.
 
-### ADB_KEY
-
-The base64-encoded private key used for ADB. A random key will be generated the first time you use ADB if not configured.
-
-To encode your existing key (which most likely lives at `${HOME}/.android/adbkey`):
-
-    $ cat /path/to/adb/key | base64 -w 0
-
-### CODE_SERVER_PORT
-
-The port `code-server` listens on. Defaults to `8040`.
-
-### CODE_SERVER_PASSWORD_HASH
-
-SHA256-hashed password for `code-server`. `code-server` won't run if this option is left empty.
-
-Hashed passwords can be generated with:
-
-```sh
-$ echo -n "YOUR_PASSWORD" | sha256sum
-```
-
 ### STARTUP_COMMAND
 
 An optional command to run during container startup.

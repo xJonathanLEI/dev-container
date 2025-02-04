@@ -1,14 +1,13 @@
 #!/bin/bash
 
+set -e
+
 OPTION_SSH_PORT=22
 OPTION_SSH_KEYS=
 OPTION_SSH_HOST_DSA_KEY=
 OPTION_SSH_HOST_ECDSA_KEY=
 OPTION_SSH_HOST_ED25519_KEY=
 OPTION_SSH_HOST_RSA_KEY=
-OPTION_ADB_KEY=
-OPTION_CODE_SERVER_PORT=8040
-OPTION_CODE_SERVER_PASSWORD_HASH=
 OPTION_STARTUP_COMMAND=
 
 if [ -n "${SSH_PORT}" ]; then
@@ -33,18 +32,6 @@ fi
 
 if [ -n "${SSH_HOST_RSA_KEY}" ]; then
     OPTION_SSH_HOST_RSA_KEY=${SSH_HOST_RSA_KEY}
-fi
-
-if [ -n "${ADB_KEY}" ]; then
-    OPTION_ADB_KEY=${ADB_KEY}
-fi
-
-if [ -n "${CODE_SERVER_PORT}" ]; then
-    OPTION_CODE_SERVER_PORT=${CODE_SERVER_PORT}
-fi
-
-if [ -n "${CODE_SERVER_PASSWORD_HASH}" ]; then
-    OPTION_CODE_SERVER_PASSWORD_HASH=${CODE_SERVER_PASSWORD_HASH}
 fi
 
 if [ -n "${STARTUP_COMMAND}" ]; then
@@ -89,21 +76,8 @@ fi
 
 sudo ssh-keygen -A
 
-if [ -n "${OPTION_ADB_KEY}" ]; then
-    mkdir -p ~/.android && echo ${OPTION_ADB_KEY} | base64 -d > ~/.android/adbkey
-fi
-
 if [ -n "${OPTION_STARTUP_COMMAND}" ]; then
     ${OPTION_STARTUP_COMMAND}
-fi
-
-sudo dockerd &
-
-if [ -n "${OPTION_CODE_SERVER_PASSWORD_HASH}" ]; then
-    HASHED_PASSWORD="${OPTION_CODE_SERVER_PASSWORD_HASH}" code-server \
-        --bind-addr 0.0.0.0:${CODE_SERVER_PORT} \
-        --user-data-dir ${HOME}/.code-server/data \
-        --extensions-dir ${HOME}/.code-server/extensions &
 fi
 
 exec sudo /usr/sbin/sshd -D
