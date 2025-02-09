@@ -24,6 +24,14 @@ RUN git clone https://github.com/extrawurst/gitui -b v0.27.0
 WORKDIR /src/gitui
 RUN cargo install --locked --path .
 
+FROM rust:1.84.1-bookworm AS ripgrep-build
+
+WORKDIR /src
+RUN git clone https://github.com/BurntSushi/ripgrep -b 14.1.1
+
+WORKDIR /src/ripgrep
+RUN cargo install --locked --path . --bin rg
+
 FROM ubuntu:24.04
 
 ARG TZ="Etc/GMT"
@@ -42,6 +50,7 @@ COPY --from=rust-analyzer-build /usr/local/cargo/bin/rust-analyzer /usr/bin/rust
 COPY --from=helix-build /usr/local/cargo/bin/hx /usr/bin/hx
 COPY --from=helix-build /src/helix/runtime /var/lib/helix/runtime
 COPY --from=gitui-build /usr/local/cargo/bin/gitui /usr/bin/gitui
+COPY --from=ripgrep-build /usr/local/cargo/bin/rg /usr/bin/rg
 
 COPY ./entry.sh /usr/local/bin/entry
 
