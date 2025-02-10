@@ -8,7 +8,7 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
 echo $TZ > /etc/timezone
 
 apt-get update
-apt-get install -y sudo curl software-properties-common build-essential openssh-server cmake git
+apt-get install -y sudo curl software-properties-common build-essential openssh-server cmake git rsync
 
 # Clear existing host keys
 rm /etc/ssh/ssh_host_*
